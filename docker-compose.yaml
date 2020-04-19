@@ -1,0 +1,30 @@
+version: '3.4'
+services:
+  apache:
+    image: apache:${BRANCH-local}
+    build:
+      context: ./
+      dockerfile: ./infrastructure/containers/apache/Dockerfile
+      target: production
+    container_name: apache
+    networks:
+      - app
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - php
+  php:
+    image: php:${BRANCH-local}
+    build:
+      context: ./
+      dockerfile: ./infrastructure/containers/php/Dockerfile
+      target: production
+    container_name: php
+    environment:
+      - APP_ENV=prod
+    networks:
+      - app
+networks:
+  app:
+    driver: bridge

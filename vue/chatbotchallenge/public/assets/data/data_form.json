@@ -1,0 +1,99 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "type": "info",
+      "model": {
+        "name": "",
+        "document": "",
+        "type" : ""
+      },
+      "schema": {
+        "fields": [
+          {
+            "type": "input",
+            "inputType": "text",
+            "label": "Name",
+            "model": "name",
+            "placeholder": "Your name",
+            "featured": true,
+            "required": true
+          },
+          {
+            "type": "input",
+            "inputType": "text",
+            "label": "Document",
+            "model": "document",
+            "placeholder": "Document",
+            "featured": true,
+            "required": true
+          },
+          {
+            "type": "select",
+            "label": "Type",
+            "model": "type",
+            "values": ["CEDULA", "RUC"],
+            "required": true
+          }
+        ]
+      }
+    },{
+      "id": 2,
+      "type": "contact",
+      "model": {
+        "date1": null,
+        "phone": ""
+      },
+      "schema": {
+        "fields": [
+          {
+            "type": "dateTimePicker",
+            "label": "Date",
+            "model": "date1",
+            "placeholder": "Fecha",
+            "required": true,
+            "dateTimePickerOptions": {
+              "format": "YYYY-MM-DD HH:mm:ss"
+            }
+          },
+          {
+            "type": "input",
+            "inputType": "text",
+            "label": "Phone",
+            "model": "phone",
+            "placeholder": "Your Phone",
+            "featured": true,
+            "required": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "type": "additional",
+      "model": {
+        "observation": "",
+        "status": false
+      },
+      "schema": {
+        "fields": [
+          {
+            "type": "input",
+            "inputType": "text",
+            "label": "Observation",
+            "model": "observation",
+            "placeholder": "Observation",
+            "featured": true,
+            "required": true
+          },
+          {
+            "type": "checkbox",
+            "label": "Status",
+            "model": "status",
+            "default": false
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -9,7 +9,6 @@ use App\Entity\UserTransaction;
 use App\Repository\UserTransactionRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
-use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -78,11 +77,9 @@ class AuthService
     public function register(Request $request): ?User
     {
         $userRegistered = null;
-        $data = $request->query->all();
-        $serializeData = $this->serializer->serialize($data, 'json');
-        $deserializeData = $this->serializer->deserialize($serializeData, User::class, 'json');
+        $data = $request->getContent();
+        $deserializeData = $this->serializer->deserialize($data, User::class, 'json');
         $validateErrors = $this->validator->validate($deserializeData);
-
         if (empty($validateErrors->count())){
             $deserializeData->setPlainPassword($deserializeData->getPassword());
             $deserializeData->setPassword($this->passwordEncoder->encodePassword($deserializeData, $deserializeData->getPassword()));

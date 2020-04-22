@@ -1,0 +1,49 @@
+.headline {
+  text-align: center;
+  font-weight: 200;
+  color: #2e7218;
+}
+.form-control {
+  text-align: center;
+  display: block;
+  width: 100%;
+  height: calc(1.6em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.message {
+  width: 45%;
+  border-radius: 10px;
+  padding: .5em;
+  /*   margin-bottom: .5em; */
+  font-size: .8em;
+}
+.message-client {
+  background: #170aff;
+  color: white;
+  //margin-left: 50%;
+  float: right;
+  clear: both;
+}
+.message-server {
+  background: #f18e79;
+  color: black;
+  float: left;
+  clear: both;
+}
+.bg-container {
+  background: #C3C3C3;
+}
+.scrollable-chat {
+  max-height: 300px;
+  overflow: auto;
+}
+

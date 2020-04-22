@@ -1,0 +1,77 @@
+<main>
+    <div class='container'>
+        <h1 class="headline">CHATBOT CHALLENGE</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-12 no-gutters">
+                <div class="row">
+                    <div class="col-md-12">
+                        <section ref="chatArea" class="chat-area">
+                            <div class="chat-box-list" v-for="(message, idx) in messages" :key="idx"
+                                 :class="message.author">
+                                <p class="message message-client" v-if="message.author === 'client'">{{ message.text
+                                    }}</p>
+                                <p class="message message-server" v-if="message.author === 'server'"
+                                   v-html="message.text"></p>
+                            </div>
+                        </section>
+                        <div id="anchor"></div>
+                    </div>
+                </div>
+                <div class="row m-1">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <input class="form-control col-md-10"
+                                   type="text"
+                                   v-model="message"
+                                   @keyup.enter="sendMessage (message, 'client')"
+                                   placeholder="Please, type your message here" autocomplete="false"
+                            />
+                            <button class="col-md-2 btn btn-success" @click="sendMessage(message, 'client')">Send
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <modal ref="authentication" name="authentication" width="400px" height="auto" :clickToClose="false">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <h5 class="card-title col-12">
+                            Insert Data to Login
+                        </h5>
+                        <input autofocus ref="login_input_username" class="form-control col-12 mb-1" v-model="username"
+                               placeholder="Insert Username"/>
+
+                        <input ref="login_input_password" class="form-control col-12 mb-1" v-model="password"
+                               placeholder="Insert Password"
+                               v-on:keyup.enter="actionLogin()"/>
+                        <button @click="actionLogin()" class="btn btn-success col-12">Login</button>
+                    </div>
+                </div>
+            </div>
+        </modal>
+        <modal ref="register" name="register" width="400px" height="auto" :clickToClose="false">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <h5 class="card-title col-12">
+                            Insert Data to Register
+                        </h5>
+                        <input autofocus class="form-control col-12 mb-1" v-model="name"
+                               placeholder="Insert Name"/>
+                        <input class="form-control col-12 mb-1" v-model="username"
+                               placeholder="Insert Username"/>
+                        <input class="form-control col-12 mb-1" type="email" v-model="email"
+                               placeholder="Insert Email"/>
+                        <input class="form-control col-12 mb-1" type="password" v-model="password"
+                               placeholder="Password"/>
+                        <input class="form-control col-12 mb-1" type="password" v-model="passwordConfirmation"
+                               placeholder="Confirm Password" v-on:keyup.enter="actionRegister()"/>
+                        <button @click="actionRegister()" class="btn btn-success col-12">Register</button>
+                    </div>
+                </div>
+            </div>
+        </modal>
+    </div>
+</main>

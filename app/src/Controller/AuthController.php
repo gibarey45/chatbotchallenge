@@ -26,6 +26,7 @@ class AuthController extends AbstractFOSRestController
     /**
      * @Route("/auth/token", name="get_token", methods={"GET","POST"})
      */
+
     public function getTokenAction()
     {
     }
@@ -42,7 +43,7 @@ class AuthController extends AbstractFOSRestController
         $result = $this->authService->register($request);
         if(!is_null($result)){
             return new JsonResponse(
-                $result,
+                ["result" => $result->getName()],
                 Response::HTTP_OK
             );
         }

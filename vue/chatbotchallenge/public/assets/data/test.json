@@ -1,0 +1,19 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "tittle": "Personal Details",
+      "type": "info"
+    },
+    {
+      "id": 2,
+      "tittle": "Contact Information",
+      "type": "contact"
+    },
+    {
+      "id": 3,
+      "tittle": "Additional Information",
+      "type": "additional"
+    }
+  ]
+}

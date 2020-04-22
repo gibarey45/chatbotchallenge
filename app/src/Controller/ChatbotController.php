@@ -53,7 +53,7 @@ class ChatbotController extends AbstractController
         $result = $this->chatbotService->exchange($request);
         if (!is_null($result)){
             return new JsonResponse(
-                $result,
+                ["result" => $result],
                 Response::HTTP_OK
             );
         } else{
@@ -82,9 +82,9 @@ class ChatbotController extends AbstractController
         $result = ($this->chatbotService->deposit($request));
         if(!is_null($result)){
             return new JsonResponse(['User'=>$result->getUserId()->getUsername(),
-                'Balance'=>$result->getBalance(),
-                'Transaction'=>$result->getTransaction(),
-                'Currency'=>$result->getCurrency()],
+                'balance'=>$result->getBalance(),
+                'transaction'=>$result->getTransaction(),
+                'currency'=>$result->getUserId()->getDefaultCurrency()],
                 Response::HTTP_OK
             );
         }
@@ -114,9 +114,9 @@ class ChatbotController extends AbstractController
         $result = $this->chatbotService->withdraw($request);
         if(!is_null($result)){
             return new JsonResponse(['User'=>$result->getUserId()->getUsername(),
-                'Balance'=>$result->getBalance(),
-                'Transaction'=>$result->getTransaction(),
-                'Currency'=>$result->getCurrency()],
+                'balance'=>$result->getBalance(),
+                'transaction'=>$result->getTransaction(),
+                'currency'=>$result->getUserId()->getDefaultCurrency()],
                 Response::HTTP_OK
             );
         }
@@ -146,13 +146,13 @@ class ChatbotController extends AbstractController
         $result = $this->chatbotService->changeCurrency($request);
         if(!is_null($result)){
             return new JsonResponse(
-                $result,
+                ["result" => $result],
                 Response::HTTP_OK
             );
         }
         else{
             return new JsonResponse(
-                'Problems changing default currency',
+                'Problems changing default currency, check your balance',
                 Response::HTTP_CONFLICT
             );
         }
@@ -167,7 +167,7 @@ class ChatbotController extends AbstractController
         $result = $this->chatbotService->obtainCurrency();
         if(!is_null($result)){
             return new JsonResponse(
-                $result,
+                ["result" => $result],
                 Response::HTTP_OK
             );
         }
@@ -197,7 +197,7 @@ class ChatbotController extends AbstractController
         $result = $this->chatbotService->balance($request);
         if(!is_null($result)){
             return new JsonResponse(
-                $result,
+                ["result" => $result],
                 Response::HTTP_OK
             );
         }
@@ -207,5 +207,14 @@ class ChatbotController extends AbstractController
                 Response::HTTP_CONFLICT
             );
         }
+    }
+
+    /**
+     * @Route("/", name="index", methods={"GET"})
+     * @return Response
+     */
+    public function index()
+    {
+        return  $this->render('index.html.twig');
     }
 }

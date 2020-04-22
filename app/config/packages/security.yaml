@@ -23,11 +23,14 @@ security:
             pattern: ^/auth/register
             stateless: true
             anonymous: true
+#        index:
+#            pattern: ^/
+#            stateless: true
+#            anonymous: true
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         api:
-            #pattern:   ^(/|/exchange|deposit/|/*)
             pattern:   ^(/)
             stateless: true
             anonymous: false
@@ -51,5 +54,6 @@ security:
     access_control:
         - { path: ^/auth/token, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/auth/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+#        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }

@@ -21,6 +21,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 /**
  * Class ChatbotService
@@ -119,9 +120,8 @@ class ChatbotService
     public function deposit(Request $request): ?UserTransaction
     {
         $result = null;
-        $data = $request->query->all();
-        $currency = $data['currency'];
-        $amount = $data['amount'];
+        $currency = $request->get('currency', '');
+        $amount = $request->get('amount', 0);
 
         $userToken = $this->tokenStorage->getToken() ? $this->tokenStorage->getToken()->getUser() : null;
         $defaultCurrency = $userToken->getDefaultCurrency();
@@ -155,9 +155,8 @@ class ChatbotService
     public function withdraw(Request $request): ?UserTransaction
     {
         $result = null;
-        $data = $request->query->all();
-        $currency = $data['currency'];
-        $amount = $data['amount'];
+        $currency = $request->get('currency', '');
+        $amount = $request->get('amount', 0);
 
         $userToken = $this->tokenStorage->getToken() ? $this->tokenStorage->getToken()->getUser() : null;
         $defaultCurrency = $userToken->getDefaultCurrency();
@@ -192,16 +191,15 @@ class ChatbotService
     public function changeCurrency(Request $request) : ?string
     {
         $result = null;
-        $data = $request->query->all();
-        $currency = $data['currency'];
+        $currency = mb_strtoupper($request->get('currency'));
         $validCurrency = $this->verifyCurrency($currency);
 
         $userToken = $this->tokenStorage->getToken() ? $this->tokenStorage->getToken()->getUser() : null;
         $actualDefaultCurrency = $userToken->getDefaultCurrency();
         $userTransaction = $this->userTransactionRepository->findOneBy(['user_id' => $userToken->getId()]);
 
-        if ($validCurrency && (mb_strtoupper($currency)!== $actualDefaultCurrency)){
-            $newBalance = $this->convertCurrency($actualDefaultCurrency, mb_strtoupper($currency), $userTransaction->getBalance());
+        if ($validCurrency && ($currency!== $actualDefaultCurrency) && $userTransaction->getBalance() > 0){
+            $newBalance = $this->convertCurrency($actualDefaultCurrency, $currency, $userTransaction->getBalance());
             $userTransaction->setBalance($newBalance);
             $userTransaction->setTransaction('Change Currency');
             $userTransaction->setCurrency(mb_strtoupper($currency));
